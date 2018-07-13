@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../stylesheet/stylesheet.css">
+    <link rel="stylesheet" href="stylesheet/stylesheet.css">
     <link href="https://fonts.googleapis.com/css?family=Jura:300,400,500,600,700" rel="stylesheet">
     <title>Ethereum Solidity Pattern</title>
 </head>
@@ -17,10 +17,16 @@
     <h1 class="p-2">ESSCP</h1>
     <h5 class="p-2">Ethereum Solidity - Smart Contract Pattern</h5>
     <div class="p-2">
-        <button type="button" class="btn btn-secondary">Github</button>
+        <button type="button" class="btn btn-secondary"
+                onclick="javascript:location.href='https://github.com/Bit62/SolidPattern'">Github
+        </button>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary">Deutsch</button>
-            <button type="button" class="btn btn-secondary">English</button>
+            <button type="button" class="btn btn-secondary"
+                    onclick="javascript:location.href='http://solidpattern.academy/'">Deutsch
+            </button>
+            <button type="button" class="btn btn-secondary"
+                    onclick="javascript:location.href='http://solidpattern.academy/en_gb'">English
+            </button>
         </div>
     </div>
 </header>
@@ -167,10 +173,12 @@
                 <div class="pt-2 pb-2">
                     <h4>Anforderungsanalyse</h4>
                     <p class="text-justify pb-2">
-                        Um ein Pattern für eine dezentrale Anwendung zu erstellen, müssen zuerst die Probleme und Herausforderungen definiert werden.
+                        Um ein Pattern für eine dezentrale Anwendung zu erstellen, müssen zuerst die Probleme und
+                        Herausforderungen definiert werden.
                     </p>
                     <p class="text-justify pb-2">
-                        Weil eine Blockchain grundsätzlich keine Änderungen zulässt, muss eine Möglichkeit geschaffen werden, nur Teile einer Anwendung zu erneuern und einer bestehenden Anwendung neu zuzuweisen.
+                        Weil eine Blockchain grundsätzlich keine Änderungen zulässt, muss eine Möglichkeit geschaffen
+                        werden, nur Teile einer Anwendung zu erneuern und einer bestehenden Anwendung neu zuzuweisen.
                     </p>
                     <p class="text-justify pb-2">
                         Um das zu ermöglichen, muss eine dezentrale Anwendung weitreichend in seine unterschiedlichen
@@ -188,11 +196,12 @@
                         eine erhöhte Flexibilität. Dadurch ergibt sich die nachfolgend dargelegte Struktur:
                     </p>
                     <ul>
-                        <li>Contracts Controller</li>
-                        <li>Database Contracts</li>
-                        <li>Controller Contracts</li>
+                        <li>Proxy Contract</li>
+                        <li>Gateway Contract</li>
                         <li>Logic Contracts</li>
-                        <li>Utility Contracts</li>
+                        <li>Service Contracts</li>
+                        <li>Controller Contracts</li>
+                        <li>Database Contracts</li>
                     </ul>
                 </div>
             </div>
@@ -200,31 +209,65 @@
                 <h2>Overview Contracts:</h2>
             </div>
             <div class="col-12">
-                <div class="d-flex p-2 justify-content-between align-items-center">
+                <div class="d-flex flex-column flex-lg-row p-2 justify-content-between align-items-center">
                     <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">Controller</div>
-                        <div>Contract</div>
-                        <a href="#" target="_blank">Github</a>
+                        <div class="font-weight-bold">
+                            <div>Proxy</div>
+                            <small>one</small>
+                        </div>
+                        <div>contract that acts as permission board</div>
+                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">ProxyContract</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">Database</div>
-                        <div>Contract</div>
-                        <a href="#" target="_blank">Github</a>
+                        <div class="font-weight-bold">
+                            <div>Gateway</div>
+                            <small>one</small>
+                        </div>
+                        <div>contract that manages all other contracts</div>
+                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">GatewayContract</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">Gateway</div>
-                        <div>Contract</div>
-                        <a href="#" target="_blank">Github</a>
+                        <div class="font-weight-bold">
+                            <div>Logic</div>
+                            <small>multiple</small>
+                        </div>
+                        <div>contract that hold´s the actual application logic</div>
+                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">PermissionLogic</a>
+                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHLogic</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">Logic</div>
-                        <div>Contract</div>
-                        <a href="#" target="_blank">Github</a>
+                        <div class="font-weight-bold">
+                            <div>Services</div>
+                            <small>multiple</small>
+                        </div>
+                        <div>contract for libraries and microservices</div>
+                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">MathServiceContract</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">Utility</div>
-                        <div>Contract</div>
-                        <a href="#" target="_blank">Github</a>
+                        <div class="font-weight-bold">
+                            <div>Controller</div>
+                            <small>multiple</small>
+                        </div>
+                        <div>contract that operates with data</div>
+                        <div>
+                            <div><a href="https://github.com/Bit62/SolidPattern"
+                                    target="_blank">PermissionController</a></div>
+                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHController</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contract m-2 d-flex flex-column justify-content-around">
+                        <div class="font-weight-bold">
+                            <div>Database</div>
+                            <small>multiple</small>
+                        </div>
+                        <div>contract that stores the actual data</div>
+                        <div>
+                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">PermissionDatabase</a>
+                            </div>
+                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHDatabase</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,9 +277,45 @@
         <div class="row mt-5">
             <div class="col-12">
                 <h2 class="pb-3">Zusammenfassung</h2>
-                <p>
-                    ...
-                </p>
+                <div class="text-justify pt-2 pb-2">
+                    Die Aufteilung der für eine größere Anwendung verwendeten Contracts auf den dafür vorgesehenen
+                    Einsatzzweck, ermöglicht es uns Teile davon durch einen anderen Contract zu ersetzen. Die zwei
+                    wichtigsten Contracts stellen dabei der Proxy und der Gateway Contract dar. Der Proxy Contract
+                    speichert die Verwalter(Owner) der Anwendung. Die maximale Anzahl der Verwalter ist auf 21
+                    beschränkt. Ein Verwalter kann Anfragen für Änderungen erstellen. Beispielsweise kann ein Verwalter
+                    eine Anfrage zum Entfernen oder hinzufügen von Contracts, Verwalter oder Manager stellen. Eine
+                    Anfrage wird durchgeführt bzw. abgewiesen wenn mehr als die Hälfte dafür oder dagegen stimmt. Der
+                    Proxy Contract speichert die Adresse des Gateway Contracts und ist alleinig berechtigt die State
+                    veränderten Funktionen des Gateway Contracts zu verwenden.
+                </div>
+                <div class="text-justify pt-2 pb-2">
+                    Der Gateway Contract speichert alle involvierten Contracts mit deren Name und Adresse und ermöglich
+                    dadurch eine unverbindliche Verbindung.
+                </div>
+                <div class="text-justify pt-2 pb-2">
+                    Ein Service Contract stellt Funktionen bereit die möglicherweise über mehrere logische Contracts
+                    hinweg nützlich sein können. Beispielsweise Funktionen die mathematische Aufgaben erledigen oder
+                    Funktionen die diversen Einschränkungen der Sprache verbessert bearbeiten.
+                </div>
+                <div class="text-justify pt-2 pb-2">
+                    Die restlichen Contracts stellen den Flow eines Applikationsteil dar.
+                </div>
+                <div class="text-justify pt-2 pb-2">
+                    <strong>Logic -> Controller -> Database</strong>
+                </div>
+                <div class="text-justify pt-2 pb-2">
+                    Ein Logic Contract enthält die Logik eines Anwendungsbereiches. Ein Controller Contract hält
+                    Operationen für Datenbank Änderungen bereit. Der Controller Contract ist jeweils nur vom jeweiligen
+                    logischen Contract aus erreichbar. Ein Database Contract hält die eigentlichen Daten.
+                </div>
+                <div class="text-justify pt-2 pb-2">
+                    Gemeinsam ergibt sich dadurch eine Struktur um skalierbare Business Lösungen auf der Ethereum
+                    Blockchain umzusetzen.
+                </div>
+                <div class="pt-4">
+                    <h4>High Level View - Pattern</h4>
+                    <img src="../assets/solidity_pattern.jpg" class="img-fluid p-4" alt="Overview Pattern"/>
+                </div>
             </div>
         </div>
     </section>
@@ -254,7 +333,7 @@
                 <h4>Projekt Links</h4>
                 <lu>
                     <li class="p-2">
-                        GitHub - Solidity Contracts
+                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">GitHub - Solidity Contracts</a>
                     </li>
                 </lu>
             </div>
@@ -285,7 +364,7 @@
             </div>
             <div class="col-12  col-lg-4">
                 <div class="text-center">
-                    <img src="../assets/netidee-logo.png" class="img-fluid" alt="Netidee Logo"/>
+                    <img src="../assets/netidee_logo.png" class="img-fluid" alt="Netidee Logo"/>
                 </div>
             </div>
         </div>
