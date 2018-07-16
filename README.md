@@ -10,3 +10,10 @@ npm i -g truffle
 ```
 
 For working with Truffle read the [Truffle Framework Docs](http://truffleframework.com/docs).
+
+#### Deployment flow:
+
+- Deploy Proxy Gateway Contract
+- Deploy Proxy Gateway Engaged (pass: Proxy Gateway Contract Address)
+- Deploy All other Contracts
+- Add, Remove, Change: Owner, Contracts, Managers at the Proxy Gateway Contract
