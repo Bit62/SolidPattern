@@ -5,17 +5,15 @@ __This contract stores 21 owner addresses and allows to vote for changes.
 */
 pragma solidity ^0.4.21;
 
-import "./GatewayContract.sol";
-import "./MathServiceContract.sol";
+import "./ProxyGatewayEngagedContract.sol";
 
-contract Proxy {
+contract ProxyGateway {
 
     // count owner - so we know what is more or equal of 60 percent and there are not more then 21 owners
     uint8 private countOwner;
 
-    // proxy and gateway contract address
-    address public PROXY;
-    address public GATEWAY;
+    // proxy and gateway engaged contract address
+    address public ENGAGED;
 
     // struct request
     struct RequestForChange {
@@ -29,6 +27,9 @@ contract Proxy {
         mapping (address => bool) voters;
     }
 
+    // mapping contracts
+    mapping (bytes32 => address) public contracts;
+
     // mapping owners
     mapping (address => bool) private owners;
 
@@ -40,7 +41,6 @@ contract Proxy {
 
     // constructor set first owner
     constructor() internal {
-        PROXY = address(this);
         owners[msg.sender] = true;
         countOwner += 1;
     }
@@ -53,7 +53,7 @@ contract Proxy {
 
     // function restrict access to - specific contract address
     function restrictedAccessToContract(bytes32 contractName) public view {
-        (address contractAddr, bool contractExists) = Gateway(GATEWAY).getContract(contractName);
+        (address contractAddr, bool contractExists) = getContract(contractName);
         if(!contractExists || msg.sender != contractAddr) revert();
     }
 
@@ -68,7 +68,7 @@ contract Proxy {
 
         RequestForChange storage newRequestStruct = requests[msg.sender];
 
-        newRequestStruct.timeStamp = block.timestamp;
+        newRequestStruct.timeStamp = block.timestamp; // "block.timestamp" can be influenced by miners to a certain degree
         newRequestStruct.requestType = requestType;
         newRequestStruct.involvedAddress = involvedAddress;
         newRequestStruct.creatorAddress = msg.sender;
@@ -77,6 +77,8 @@ contract Proxy {
         newRequestStruct.voters[msg.sender] = true;
 
         requests[msg.sender] = newRequestStruct;
+
+        return true;
     }
 
     // vote for specific request
@@ -90,7 +92,7 @@ contract Proxy {
         }
 
         // if too much time is passed > 30 days is over
-        if(block.timestamp > (thisRequest.timeStamp + 30 days)) {
+        if(block.timestamp >= (thisRequest.timeStamp + 30 days)) {
             return false;
         }
 
@@ -108,14 +110,22 @@ contract Proxy {
 
     }
 
+    // calculate the majority of current owners in the system
+    function calculateOwnerMajority() internal view returns (uint8) {
+
+        uint8 majority = countOwner / 2;
+
+        return majority;
+
+    }
+
     // check votes - if more than majority - make actual changes - no time limits because changes need to go quick
     function checkVotings(address addr) restrictedAccess external returns (bool) {
 
         RequestForChange storage thisRequest = requests[addr];
 
-        // get math service contract address
-        address mathService = Gateway(GATEWAY).contracts("MathService");
-        uint8 majority = MathService(mathService).calculateOwnerMajority(countOwner);
+        // calculate owner majority
+        uint8 majority = calculateOwnerMajority();
 
         // if the majority says no - remove request
         if(thisRequest.negVotes > majority) {
@@ -134,20 +144,12 @@ contract Proxy {
                 success = removeOwner(thisRequest.involvedAddress);
             }
 
-            if(thisRequest.requestType == keccak256("changeGatewayContract")) {
-                success = changeGatewayContract(thisRequest.involvedAddress);
-            }
-
-            if(thisRequest.requestType == keccak256("selfDestruct")) {
-                kill(thisRequest.involvedAddress);
-            }
-
             if(thisRequest.requestType == keccak256("addContract")) {
-                success = Gateway(GATEWAY).addContract(thisRequest.involvedIdentifier ,thisRequest.involvedAddress);
+                success = addContract(thisRequest.involvedIdentifier ,thisRequest.involvedAddress);
             }
 
             if(thisRequest.requestType == keccak256("removeContract")) {
-                success = Gateway(GATEWAY).removeContract(thisRequest.involvedIdentifier);
+                success = removeContract(thisRequest.involvedIdentifier);
             }
 
             if(thisRequest.requestType == keccak256("addManager")) {
@@ -158,6 +160,14 @@ contract Proxy {
                 success = removeManager(thisRequest.involvedAddress);
             }
 
+            if(thisRequest.requestType == keccak256("setProxyGatewayEngagedAddress")) {
+                success = setProxyGatewayEngagedAddress(thisRequest.involvedAddress);
+            }
+
+            if(thisRequest.requestType == keccak256("resetProxyAtGatewayEngaged")) {
+                success = resetProxyAtGatewayEngaged(thisRequest.involvedAddress);
+            }
+
         }
 
         if(success) {
@@ -166,6 +176,46 @@ contract Proxy {
 
         return false;
 
+    }
+
+    // add a new contract
+    function addContract(bytes32 name, address addr) internal returns (bool) {
+
+        // check if contract exists
+        if(contracts[name] != 0x0) {
+            return false;
+        }
+
+        contracts[name] = addr;
+
+        return true;
+    }
+
+    // remove a contract
+    function removeContract(bytes32 name) internal returns (bool) {
+
+        // check if contract exists
+        if(contracts[name] == 0x0) {
+            return false;
+        }
+
+        contracts[name] = 0x0;
+
+        return true;
+    }
+
+    // function to get a contract address by name
+    function getContract(bytes32 contractName) public constant returns (address, bool) {
+
+        address contractAddress = contracts[contractName];
+
+        bool contractExists = true;
+
+        if(contractAddress == 0x0) {
+            contractExists = false;
+        }
+
+        return (contractAddress, contractExists);
     }
 
     // add manager
@@ -193,13 +243,6 @@ contract Proxy {
         delete managers[addr];
 
         return true;
-
-    }
-
-    // change gateway contract
-    function changeGatewayContract(address addr) internal returns (bool) {
-
-        GATEWAY = Gateway(addr);
 
     }
 
@@ -231,11 +274,24 @@ contract Proxy {
         return true;
     }
 
-    // kill this contract
-    function kill(address sendFundsTo) internal {
+    // set proxy gateway engaged contract address
+    function setProxyGatewayEngagedAddress(address addr) internal returns (bool) {
 
-        // self destruct function
-        selfdestruct(sendFundsTo);
+        if(addr != 0x0) {
+            ENGAGED = addr;
+            return true;
+        }
+
+        return false;
+
+    }
+
+    // reset proxy gateway address at proxy gateway contract
+    function resetProxyAtGatewayEngaged(address addr) internal returns (bool) {
+
+        bool success = ProxyGatewayEngaged(ENGAGED).setProxyGatewayAddress(addr);
+
+        return success;
 
     }
 

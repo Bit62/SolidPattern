@@ -34,23 +34,24 @@
     <section id="start">
         <div class="row mt-5">
             <div class="col-12">
-                <h2 class="pb-3">Ausgangslage</h2>
+                <h2 class="pb-3">Initial situation</h2>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Warum ein Pattern für Solidity?</h4>
-                    <p class="text-justify">Das Interesse an dezentralisierten Anwendungen nimmt stetig zu. Um eine
-                        Business Anwendung auf der Ethereum Blockchain umzusetzen, bedarf es einer gewissen Vorplanung.
-                        Eine fehlerhafte, Struktur kann die Anwendung schnell unbrauchbar machen. Anpassungen sind nicht
-                        möglich! Der Contract muss erneut geschrieben und im Netzwerk „deployed“ werden. Ein Pattern
-                        ähnlich dem bekannten MVC Prinzip würde es Entwicklern ermöglichen, schneller und effizienter
-                        neue Anwendungen umzusetzen.
+                    <h4>Why a pattern for Solidity?</h4>
+                    <p class="text-justify">The interest in decentralized applications is steadily increasing.
+                        Implementing a business
+                        application on the Ethereum Blockchain requires a certain amount of preliminary planning. A
+                        faulty structure can quickly disable the whole application. Adjustments are not possible! The
+                        contract
+                        must be rewritten and deployed on the network. A similar pattern to the familiar MVC principle,
+                        would allow developers to be faster and more efficient by implementing new applications.
                     </p>
                 </div>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Risiken bei der Umsetzung:</h4>
+                    <h4>Implementation risks:</h4>
                     <p class="text-justify">
                         Solidity ist eine junge Programmiersprache und kommt lediglich bei Ethereum zum Einsatz. Dadurch
                         befindet sich die Sprache selbst noch in der Entwicklungsphase. Die Umsetzung von dezentralen
@@ -66,20 +67,24 @@
                 <div class="pt-2 pb-2">
                     <h4>State of the Art:</h4>
                     <p class="text-justify">
-                        Die Programmiersprache Solidity erlaubt Vererbung, zusätzlich wurde ab der Version 0.4 auch die
-                        Möglichkeit der Erstellung von Libraries integriert. Es gibt bis dato keine bekannten oder
-                        angesehenen Vorgehensweisen für große modulare Blockchain Anwendungen.
+                        Solidity is a very young programming language and is only used by ethereum itself. Thereby the
+                        language
+                        is still in a early development phase. The implementation of decentralized application brings
+                        many new problems with it. One problem represents the limitation in the data storage. Another
+                        problem is the immutability of program code - what should be given on one hand with a
+                        "Trustless" system, but on the other hand not must necessarily affect the entire application
+                        code. A
+                        simple conversion from existing a pattern is unlikely to be possible due to the appealed issues.
                     </p>
                 </div>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Projektziele:</h4>
+                    <h4>Project objectives:</h4>
                     <p class="text-justify">
-                        Dieses Pattern als eine Art Anwendungsgrundlage soll Entwickler dabei unterstützen einfach und
-                        schnell auf der Ethereum Blockchain mit einer eigenen Anwendung loszulegen. Im besten Fall
-                        entwickelt sich dieses Pattern zu einem bekannten Startpunkt und findet weitere Unterstützer um
-                        das Projekt stetig weiter zu entwickeln.
+                        This pattern should one day support developers to get simply and quickly started with there own
+                        ethereum blockchain application. The best case scenario for this pattern would develop it to a
+                        well-known starting point and finds more supporters to continuously develop this project.
                     </p>
                 </div>
             </div>
@@ -88,38 +93,35 @@
     <section id="central">
         <div class="row mt-5">
             <div class="col-12">
-                <h2 class="pb-3">Zentral vs. Dezentral</h2>
-                <p>Welche Patterns kommen bei zentralen Anwendungen zum Einsatz? Welche Patterns sind besonders
-                    anwenderfreundlich und beliebt? Können diese Patterns auf einer dezentralen Anwendung angewendet
-                    werden?</p>
+                <h2 class="pb-3">Central vs. decentralized</h2>
+                <p>
+                    Which patterns are used in central applications? Which patterns are very user-friendly and
+                    popular? Can these patterns be applied to a decentralized application?
+                </p>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Klassifikation Entwurfsmuster:</h4>
+                    <h4>Classification design pattern:</h4>
                     <p class="text-justify">
-                        Entwurfsmuster lassen sich grundsätzlich durch deren Zweck und deren Wirkungsbereich
-                        unterscheiden.
+                        Design patterns can basically be defined and distinguished by their purpose and their scope of
+                        action.
                     </p>
                     <ul>
-                        <li>Erzeugungsmuster (Erzeugen Objekte)</li>
-                        <li>Strukturmuster (Vereinfachung der Struktur zwischen Klassen)</li>
-                        <li>Verhaltensmuster (Zusammenspiel und Nachrichtenaustausch zwischen Objekten)</li>
+                        <li>Generation Pattern (Create Objects)</li>
+                        <li>Structural pattern (simplification of the structure between classes)</li>
+                        <li>Behavior patterns (interaction and message exchange between objects)</li>
                     </ul>
                 </div>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Eine dezentrale Sicht auf MVC:</h4>
+                    <h4>A decentralized view on MVC:</h4>
                     <p class="text-justify pb-2">
-                        Heutzutage wird das MVC Prinzip meist mit der Struktur des Frontend-Codes in Verbindung
-                        gebracht. Der Grund dafür ist die frühere strikte Trennung zwischen Frondend und Backend.
-                        Mittlerweile ist Javascript ein fester Bestandteil jeder modernen Web Anwendung und stellt
-                        dadurch oftmals schon den Teil des Controllers dar. Also die View als HTML, der Controller und
-                        das Model als Javascript komplett auf der Clientseite dazu findet man je nach Backend erneut
-                        Controller und Model als Schnittstelle auf der Serverseite.
-                    </p>
-                    <p class="text-justify">
-                        Für eine dezentrale Anwendung..
+                        Nowadays, the MVC principle is mostly related to the structure based on the frontend code. The
+                        reason for this is the former strict separation between frontend and backend. Meanwhile,
+                        Javascript is an integral part of any modern web application and provides often the part of the
+                        controller. This brings us to a view as HTML, and a controller and model in javascript -
+                        sometimes this pattern repeats again on the server side of the application.
                     </p>
                 </div>
             </div>
@@ -130,70 +132,68 @@
             <div class="col-12">
                 <h2 class="pb-3">Solution</h2>
                 <p>
-                    Nachfolgend werden die Vorgehensweise und die daraus resultierenden Ergebnisse dargestellt.
+                    The procedure and the resulting results are presented below.
                 </p>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Was zeichnet eine Ökosystem Anwendung aus?</h4>
+                    <h4>What characterizes an ecosystem application?</h4>
                     <p class="text-justify pb-2">
-                        Unternehmen bewegen sich immer mehr in die Automatisierung von Prozessen, dabei tritt oftmals
-                        das Problem auf, dass diese Anwendungen von einzelnen Teilnehmern betrieben werden und nicht wie
-                        gewünscht vom gesamten Netzwerk bzw. Ökosystem von Teilnehmern. Ökosystemanwendungen versuchen
-                        also die Prozesse auf der Ebene der Wertschöpfungskette zu automatisieren und bieten damit einen
-                        Rahmen für den Aufbau komplizierter und vernetzter Netzwerke um die Kosten zu senken und neue
-                        Möglichkeiten der Wertschöpfung zu eröffnen.
+                        Companies are moving more and more into process automation but often occurs thereby the problem
+                        that these applications are operated by individual subscribers and not like desired by the
+                        entire network or ecosystem of participants. Ecosystem applications try to automate the
+                        processes at a level of the value chain and thus provide one framework for building complex and
+                        linked networks to reduce costs and create new opportunities and values.
                     </p>
                 </div>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
                     <h4>Blockchain Generation</h4>
-                    <p class="text-justify pb-2">
-                        Anhand der neuen dezentralen Anwendungsmöglichkeiten lassen sich die Generationen von
-                        Ökosystemanwendungen, wie folgt einteilen:
+                    <p class="text-justify pb-2">Based on the new decentralized application possibilities, the
+                        generations of ecosystem applications should be categorized, as follows:
                     </p>
                     <ul>
                         <li>
-                            1. Generation: Einfluss auf die Wirtschaft durch Datenskalierung und Synchronisation von
-                            papierbasierten internen Prozessen großer Unternehmen Mithilfe von Datenzentren.
+                            1. Generation: Impact on the economy through data scaling and synchronization of paper-based
+                            internal processes of large companies using data centers.
                         </li>
                         <li>
-                            2. Generation: Einfluss auf die Wirtschaft durch Datenskalierung und Synchronisation von
-                            papierbasierten internen Prozessen kleinerer Unternehmen Mithilfe von Cloud Anbietern.
+                            2. Generation: Impact on the economy through data scaling and synchronization of paper-based
+                            internal processes of smaller companies with the help of cloud providers.
                         </li>
                         <li>
-                            <strong>3. Generation: Verwendung von Blockchains und Smart Contracts um abgestimmte
-                                Prozesse auf Ökosystemebene zu erzeugen.</strong>
+                            <strong>3. Generation: Use of blockchain technologies and smart contracts to match processes
+                                on an ecosystem level.</strong>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-12">
                 <div class="pt-2 pb-2">
-                    <h4>Anforderungsanalyse</h4>
+                    <h4>Requirements analysis</h4>
                     <p class="text-justify pb-2">
-                        Um ein Pattern für eine dezentrale Anwendung zu erstellen, müssen zuerst die Probleme und
-                        Herausforderungen definiert werden.
+                        First we need to define the problems and challenges to create a pattern for a decentralized
+                        application.
                     </p>
                     <p class="text-justify pb-2">
-                        Weil eine Blockchain grundsätzlich keine Änderungen zulässt, muss eine Möglichkeit geschaffen
-                        werden, nur Teile einer Anwendung zu erneuern und einer bestehenden Anwendung neu zuzuweisen.
+                        Because a blockchain basically does not allow any changes, a possibility to renew parts of an
+                        application and reassign them to an existing application must be created.
                     </p>
                     <p class="text-justify pb-2">
-                        Um das zu ermöglichen, muss eine dezentrale Anwendung weitreichend in seine unterschiedlichen
-                        Bestandteile aufgeteilt werden.
+                        To make this possible, a decentralized application must be divided by far reaching in its
+                        different components.
                     </p>
                     <ul>
-                        <li>Daten und Struktur der Daten</li>
-                        <li>Logische Operationen</li>
-                        <li>Controller zwischen Daten und Logik</li>
-                        <li>Libraries für wiederkehrende Anforderungen</li>
+                        <li>Data and structure of the data</li>
+                        <li>Logical operations</li>
+                        <li>Controller between data and logic</li>
+                        <li>Libraries for recurring requests</li>
                     </ul>
-                    <p class="text-justify pb-2">
-                        Zusätzlich ist es notwendig eine Art Routing in die Struktur einer dezentralen Anwendung zu
-                        bringen. Das Pattern wird deshalb um einige Gateway Contracts erweitert und ermöglich dadurch
-                        eine erhöhte Flexibilität. Dadurch ergibt sich die nachfolgend dargelegte Struktur:
+                    <p class="text-justify pb-2">In addition, it is necessary to bring some sort of routing into the
+                        structure of a decentralized
+                        application. The pattern is therefore extended by a proxy and gateway contract
+                        and thus makes possible an increased flexibility. This results in the following structure:
                     </p>
                     <ul>
                         <li>Proxy Contract</li>
@@ -212,19 +212,13 @@
                 <div class="d-flex flex-column flex-lg-row p-2 justify-content-between align-items-center">
                     <div class="contract m-2 d-flex flex-column justify-content-around">
                         <div class="font-weight-bold">
-                            <div>Proxy</div>
+                            <div>Proxy Gateway</div>
                             <small>one</small>
                         </div>
-                        <div>contract that acts as permission board</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">ProxyContract</a>
-                    </div>
-                    <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">
-                            <div>Gateway</div>
-                            <small>one</small>
-                        </div>
-                        <div>contract that manages all other contracts</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">GatewayContract</a>
+                        <div>contract that acts as permission board and manages all engaged contracts</div>
+                        <small>includes simple proxy gateway inheritance contract</small>
+                        <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/ProxyContract.sol" target="_blank">ProxyGateway</a>
+                        <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/ProxyContract.sol" target="_blank">ProxyGatewayEngaged</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
                         <div class="font-weight-bold">
@@ -232,16 +226,14 @@
                             <small>multiple</small>
                         </div>
                         <div>contract that hold´s the actual application logic</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">PermissionLogic</a>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHLogic</a>
-                    </div>
-                    <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">
-                            <div>Services</div>
-                            <small>multiple</small>
+                        <div>
+                            <div>
+                                <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/PermissionLogicContract.sol" target="_blank">PermissionLogic</a>
+                            </div>
+                            <div>
+                                <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/CoinETHLogicContract.sol" target="_blank">CoinETHLogic</a>
+                            </div>
                         </div>
-                        <div>contract for libraries and microservices</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">MathServiceContract</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
                         <div class="font-weight-bold">
@@ -250,9 +242,9 @@
                         </div>
                         <div>contract that operates with data</div>
                         <div>
-                            <div><a href="https://github.com/Bit62/SolidPattern"
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/PermissionControllerContract.sol"
                                     target="_blank">PermissionController</a></div>
-                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHController</a>
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/CoinETHControllerContract.sol" target="_blank">CoinETHController</a>
                             </div>
                         </div>
                     </div>
@@ -263,11 +255,19 @@
                         </div>
                         <div>contract that stores the actual data</div>
                         <div>
-                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">PermissionDatabase</a>
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/CoinETHDatabaseContract.sol" target="_blank">PermissionDatabase</a>
                             </div>
-                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHDatabase</a>
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/PermissionDatabaseContract.sol" target="_blank">CoinETHDatabase</a>
                             </div>
                         </div>
+                    </div>
+                    <div class="contract m-2 d-flex flex-column justify-content-around">
+                        <div class="font-weight-bold">
+                            <div>Services</div>
+                            <small>multiple</small>
+                        </div>
+                        <div>contract for libraries and microservices</div>
+                        <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/MathServiceContract.sol" target="_blank">MathServiceContract</a>
                     </div>
                 </div>
             </div>
@@ -276,41 +276,39 @@
     <section>
         <div class="row mt-5">
             <div class="col-12">
-                <h2 class="pb-3">Zusammenfassung</h2>
-                <div class="text-justify pt-2 pb-2">
-                    Die Aufteilung der für eine größere Anwendung verwendeten Contracts auf den dafür vorgesehenen
-                    Einsatzzweck, ermöglicht es uns Teile davon durch einen anderen Contract zu ersetzen. Die zwei
-                    wichtigsten Contracts stellen dabei der Proxy und der Gateway Contract dar. Der Proxy Contract
-                    speichert die Verwalter(Owner) der Anwendung. Die maximale Anzahl der Verwalter ist auf 21
-                    beschränkt. Ein Verwalter kann Anfragen für Änderungen erstellen. Beispielsweise kann ein Verwalter
-                    eine Anfrage zum Entfernen oder hinzufügen von Contracts, Verwalter oder Manager stellen. Eine
-                    Anfrage wird durchgeführt bzw. abgewiesen wenn mehr als die Hälfte dafür oder dagegen stimmt. Der
-                    Proxy Contract speichert die Adresse des Gateway Contracts und ist alleinig berechtigt die State
-                    veränderten Funktionen des Gateway Contracts zu verwenden.
+                <h2 class="pb-3">Summary</h2>
+                <div class="text-justify pt-2 pb-2">Splitting up larger application into multiple smaller contracts used
+                    for a specific purpose allows
+                    us to replace parts of it with another contract. The two most important contracts in this case are
+                    the proxy gateway and the connected engaged contract. The proxy contract stores all contract owners of the
+                    application. The number of contract owners are limited to 21. An owner can create requests for
+                    changes. For example, an owner makes a request to remove or add contracts, owner or manager. A
+                    Request will be made or rejected if more than half of the votes are in favor or against it. The
+                    proxy contract stores all engaged contract addresses and is the only allowed contract to change
+                    states on the connected engaged contract.
                 </div>
                 <div class="text-justify pt-2 pb-2">
-                    Der Gateway Contract speichert alle involvierten Contracts mit deren Name und Adresse und ermöglich
-                    dadurch eine unverbindliche Verbindung.
+                    The gateway contract saves all involved contracts with their name and address and make therby a
+                    non-binding connection possible.
                 </div>
                 <div class="text-justify pt-2 pb-2">
-                    Ein Service Contract stellt Funktionen bereit die möglicherweise über mehrere logische Contracts
-                    hinweg nützlich sein können. Beispielsweise Funktionen die mathematische Aufgaben erledigen oder
-                    Funktionen die diversen Einschränkungen der Sprache verbessert bearbeiten.
+                    A service contract provides features that may be useful for many other logical contracts. For
+                    example, functions that do math tasks or functions they improve the various language limitations.
                 </div>
                 <div class="text-justify pt-2 pb-2">
-                    Die restlichen Contracts stellen den Flow eines Applikationsteil dar.
+                    The remaining contracts represent the flow of an application part.
                 </div>
                 <div class="text-justify pt-2 pb-2">
                     <strong>Logic -> Controller -> Database</strong>
                 </div>
                 <div class="text-justify pt-2 pb-2">
-                    Ein Logic Contract enthält die Logik eines Anwendungsbereiches. Ein Controller Contract hält
-                    Operationen für Datenbank Änderungen bereit. Der Controller Contract ist jeweils nur vom jeweiligen
-                    logischen Contract aus erreichbar. Ein Database Contract hält die eigentlichen Daten.
+                    A logic contract contains the logic of an application area. A controller contract makes operations
+                    for database changes ready and is only reachable through a appropriate logical contract. A database
+                    contract holds the actual data.
                 </div>
                 <div class="text-justify pt-2 pb-2">
-                    Gemeinsam ergibt sich dadurch eine Struktur um skalierbare Business Lösungen auf der Ethereum
-                    Blockchain umzusetzen.
+                    Together, this results in a scalable business solutions structure for the ethereum blockchain
+                    application.
                 </div>
                 <div class="pt-4">
                     <h4>High Level View - Pattern</h4>
@@ -322,7 +320,7 @@
     <section id="links" class="pt-5 pb-5">
         <div class="row">
             <div class="col-12 col-lg-6">
-                <h4>Offizielle Links</h4>
+                <h4>Official links</h4>
                 <lu>
                     <li class="p-2">
                         <a href="https://solidity.readthedocs.io/en/latest/" target="_blank">Solidity Docs</a>
@@ -330,7 +328,7 @@
                 </lu>
             </div>
             <div class="col-12 col-lg-6">
-                <h4>Projekt Links</h4>
+                <h4>Project links</h4>
                 <lu>
                     <li class="p-2">
                         <a href="https://github.com/Bit62/SolidPattern" target="_blank">GitHub - Solidity Contracts</a>
@@ -345,7 +343,7 @@
         <div class="row">
             <div class="col-12  col-lg-5">
                 <div class="text-left">
-                    <strong>Kontakt u. Impressum</strong>
+                    <strong>Contact & imprint</strong>
                     <div>2Mighty</div>
                     <div>Werkstätte Wattens</div>
                     <div>Weisstraße 9, 6112 Wattens</div>

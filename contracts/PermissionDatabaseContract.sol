@@ -4,15 +4,12 @@ __This contract works only internal, stores the permission data and gets called 
 
 pragma solidity ^0.4.21;
 
-import "./ProxyContract.sol";
+import "./ProxyGatewayContract.sol";
+import "./ProxyGatewayEngagedContract.sol";
 
-contract PermissionDatabase {
+contract PermissionDatabase is ProxyGatewayEngaged {
 
-    Proxy proxy;
-
-    constructor(address proxyContract) public {
-        proxy = Proxy(proxyContract);
-    }
+    bytes32 restrictedAccessThroughContractName = "PermissionController";
 
     // struct coin permission - e.g. "withdraw_eth" - 1
     struct Permission {
@@ -26,41 +23,51 @@ contract PermissionDatabase {
     // set an integer value for permission based on coin tags e.g. "withdraw_eth"
     function changePermission(address addr, bytes32 tag, uint8 lvl) public returns (bool) {
 
-        // allow access only through contract flow
-        proxy.restrictedAccessToContract("PermissionController");
+        // if gateway address exists
+        if(PROXY_GATEWAY != 0x0) {
+            // allow access only through contract flow
+            ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
-        Permission memory taggedPermission;
+            Permission memory taggedPermission;
 
-        taggedPermission.tag = tag;
-        taggedPermission.lvl = lvl;
+            taggedPermission.tag = tag;
+            taggedPermission.lvl = lvl;
 
-        permissions[addr].push(taggedPermission);
+            permissions[addr].push(taggedPermission);
 
-        return true;
+            return true;
+        }
+
+        return false;
 
     }
 
     // get permission by coin tag and user address
     function getPermission(address addr, bytes32 tag) public view returns (uint8) {
 
-        // allow access only through contract flow
-        proxy.restrictedAccessToContract("PermissionController");
+        // if gateway address exists
+        if(PROXY_GATEWAY != 0x0) {
+            // allow access only through contract flow
+            ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
-        Permission[] storage taggedPermissionsArray = permissions[addr];
+            Permission[] storage taggedPermissionsArray = permissions[addr];
 
-        uint length = taggedPermissionsArray.length;
+            uint length = taggedPermissionsArray.length;
 
-        for(uint i = 0; i < length; i++) {
+            for(uint i = 0; i < length; i++) {
 
-            Permission memory taggedPermission;
+                Permission memory taggedPermission;
 
-            taggedPermission = taggedPermissionsArray[i];
+                taggedPermission = taggedPermissionsArray[i];
 
-            if(taggedPermission.tag == tag) {
+                if(taggedPermission.tag == tag) {
 
-                return taggedPermission.lvl;
+                    return taggedPermission.lvl;
 
+                }
             }
+
+            return 0;
         }
 
         return 0;

@@ -118,9 +118,6 @@
                         das Model als Javascript komplett auf der Clientseite dazu findet man je nach Backend erneut
                         Controller und Model als Schnittstelle auf der Serverseite.
                     </p>
-                    <p class="text-justify">
-                        Für eine dezentrale Anwendung..
-                    </p>
                 </div>
             </div>
         </div>
@@ -192,12 +189,11 @@
                     </ul>
                     <p class="text-justify pb-2">
                         Zusätzlich ist es notwendig eine Art Routing in die Struktur einer dezentralen Anwendung zu
-                        bringen. Das Pattern wird deshalb um einige Gateway Contracts erweitert und ermöglich dadurch
+                        bringen. Das Pattern wird deshalb um einen Proxy und Gateway Contract erweitert und ermöglich dadurch
                         eine erhöhte Flexibilität. Dadurch ergibt sich die nachfolgend dargelegte Struktur:
                     </p>
                     <ul>
-                        <li>Proxy Contract</li>
-                        <li>Gateway Contract</li>
+                        <li>Proxy Gateway Contract</li>
                         <li>Logic Contracts</li>
                         <li>Service Contracts</li>
                         <li>Controller Contracts</li>
@@ -212,19 +208,13 @@
                 <div class="d-flex flex-column flex-lg-row p-2 justify-content-between align-items-center">
                     <div class="contract m-2 d-flex flex-column justify-content-around">
                         <div class="font-weight-bold">
-                            <div>Proxy</div>
+                            <div>Proxy Gateway</div>
                             <small>one</small>
                         </div>
-                        <div>contract that acts as permission board</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">ProxyContract</a>
-                    </div>
-                    <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">
-                            <div>Gateway</div>
-                            <small>one</small>
-                        </div>
-                        <div>contract that manages all other contracts</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">GatewayContract</a>
+                        <div>contract that acts as permission board and manages all engaged contracts</div>
+                        <small>includes simple proxy gateway inheritance contract</small>
+                        <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/ProxyContract.sol" target="_blank">ProxyGateway</a>
+                        <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/ProxyContract.sol" target="_blank">ProxyGatewayEngaged</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
                         <div class="font-weight-bold">
@@ -232,16 +222,14 @@
                             <small>multiple</small>
                         </div>
                         <div>contract that hold´s the actual application logic</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">PermissionLogic</a>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHLogic</a>
-                    </div>
-                    <div class="contract m-2 d-flex flex-column justify-content-around">
-                        <div class="font-weight-bold">
-                            <div>Services</div>
-                            <small>multiple</small>
+                        <div>
+                            <div>
+                                <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/PermissionLogicContract.sol" target="_blank">PermissionLogic</a>
+                            </div>
+                            <div>
+                                <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/CoinETHLogicContract.sol" target="_blank">CoinETHLogic</a>
+                            </div>
                         </div>
-                        <div>contract for libraries and microservices</div>
-                        <a href="https://github.com/Bit62/SolidPattern" target="_blank">MathServiceContract</a>
                     </div>
                     <div class="contract m-2 d-flex flex-column justify-content-around">
                         <div class="font-weight-bold">
@@ -250,9 +238,9 @@
                         </div>
                         <div>contract that operates with data</div>
                         <div>
-                            <div><a href="https://github.com/Bit62/SolidPattern"
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/PermissionControllerContract.sol"
                                     target="_blank">PermissionController</a></div>
-                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHController</a>
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/CoinETHControllerContract.sol" target="_blank">CoinETHController</a>
                             </div>
                         </div>
                     </div>
@@ -263,11 +251,19 @@
                         </div>
                         <div>contract that stores the actual data</div>
                         <div>
-                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">PermissionDatabase</a>
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/CoinETHDatabaseContract.sol" target="_blank">PermissionDatabase</a>
                             </div>
-                            <div><a href="https://github.com/Bit62/SolidPattern" target="_blank">CoinETHDatabase</a>
+                            <div><a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/PermissionDatabaseContract.sol" target="_blank">CoinETHDatabase</a>
                             </div>
                         </div>
+                    </div>
+                    <div class="contract m-2 d-flex flex-column justify-content-around">
+                        <div class="font-weight-bold">
+                            <div>Services</div>
+                            <small>multiple</small>
+                        </div>
+                        <div>contract for libraries and microservices</div>
+                        <a href="https://github.com/Bit62/SolidPattern/blob/master/contracts/MathServiceContract.sol" target="_blank">MathServiceContract</a>
                     </div>
                 </div>
             </div>
@@ -280,13 +276,12 @@
                 <div class="text-justify pt-2 pb-2">
                     Die Aufteilung der für eine größere Anwendung verwendeten Contracts auf den dafür vorgesehenen
                     Einsatzzweck, ermöglicht es uns Teile davon durch einen anderen Contract zu ersetzen. Die zwei
-                    wichtigsten Contracts stellen dabei der Proxy und der Gateway Contract dar. Der Proxy Contract
+                    wichtigsten Contracts stellen dabei der Proxy Gateway Contract und der Connected Engaged Contract dar. Der Proxy Contract
                     speichert die Verwalter(Owner) der Anwendung. Die maximale Anzahl der Verwalter ist auf 21
                     beschränkt. Ein Verwalter kann Anfragen für Änderungen erstellen. Beispielsweise kann ein Verwalter
                     eine Anfrage zum Entfernen oder hinzufügen von Contracts, Verwalter oder Manager stellen. Eine
                     Anfrage wird durchgeführt bzw. abgewiesen wenn mehr als die Hälfte dafür oder dagegen stimmt. Der
-                    Proxy Contract speichert die Adresse des Gateway Contracts und ist alleinig berechtigt die State
-                    veränderten Funktionen des Gateway Contracts zu verwenden.
+                    Proxy Contract speichert die gesamten Contracts und ist alleinig berechtigt den Connected Engaged Contract zu bearbeiten.
                 </div>
                 <div class="text-justify pt-2 pb-2">
                     Der Gateway Contract speichert alle involvierten Contracts mit deren Name und Adresse und ermöglich

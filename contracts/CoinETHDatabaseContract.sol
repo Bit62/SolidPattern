@@ -5,15 +5,12 @@ __This contract stores data of users ether values
 
 pragma solidity ^0.4.21;
 
-import "./ProxyContract.sol";
+import "./ProxyGatewayContract.sol";
+import "./ProxyGatewayEngagedContract.sol";
 
-contract CoinETHDatabase {
+contract CoinETHDatabase is ProxyGatewayEngaged {
 
-    Proxy proxy;
-
-    constructor(address proxyContract) public {
-        proxy = Proxy(proxyContract);
-    }
+    bytes32 restrictedAccessThroughContractName = "CoinETHController";
 
     // mapping addresses and coin balances
     mapping (address => uint) public balances;
@@ -22,7 +19,7 @@ contract CoinETHDatabase {
     function deposit(address depositAddr, uint depositAmount) public returns (bool) {
 
         // allow access only through contract flow
-        proxy.restrictedAccessToContract("CoinETHController");
+        ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
         // add amount to current balance
         balances[depositAddr] += depositAmount;
@@ -35,7 +32,7 @@ contract CoinETHDatabase {
     function withdraw(address withdrawAddr, uint withdrawAmount) public returns (bool) {
 
         // allow access only through contract flow
-        proxy.restrictedAccessToContract("CoinETHController");
+        ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
         // store current balance
         uint currentBalance = balances[withdrawAddr];

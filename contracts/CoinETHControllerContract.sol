@@ -5,53 +5,68 @@ __This contract shows an example of a controller contract
 
 pragma solidity ^0.4.21;
 
-import "./ProxyContract.sol";
+import "./ProxyGatewayContract.sol";
+import "./ProxyGatewayEngagedContract.sol";
+
 import "./CoinETHDatabaseContract.sol";
 
-contract CoinETHController  {
+contract CoinETHController is ProxyGatewayEngaged  {
 
-    Proxy proxy;
-
-    constructor(address proxyContract) public {
-        proxy = Proxy(proxyContract);
-    }
+    bytes32 coinETHDatabaseContractName = "CoinETHDatabase";
+    bytes32 restrictedAccessThroughContractName = "CoinETHLogic";
 
     // function to deposit coin using the connected database contract
     //-> return bool
-    function deposit(address coinETHDatabase, address depositAddr, uint depositAmount) public returns (bool) {
+    function deposit(address depositAddr, uint depositAmount) public returns (bool) {
 
-        // allow access only through contract flow
-        proxy.restrictedAccessToContract("CoinETHLogicContact");
+        // if gateway address exists
+        if(PROXY_GATEWAY != 0x0) {
+            // allow access only through contract flow
+            ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
-        // deposit amount to specific address
-        bool success = CoinETHDatabase(coinETHDatabase).deposit(depositAddr, depositAmount);
+            // get coin eth database address
+            address coinETHDatabase = ProxyGateway(PROXY_GATEWAY).contracts(coinETHDatabaseContractName);
 
-        // if deposit is not successfully return false
-        if(!success) {
+            // deposit amount to specific address
+            bool success = CoinETHDatabase(coinETHDatabase).deposit(depositAddr, depositAmount);
 
-            return false;
+            // if deposit is not successfully return false
+            if(!success) {
 
+                return false;
+
+            }
+
+            return true;
         }
 
-        return true;
+        return false;
 
     }
 
     // function to withdraw a coin using the connected database contract
     //-> return bool
-    function withdraw(address coinETHDatabase, address withdrawAddr, uint withdrawAmount) public returns (bool) {
+    function withdraw(address withdrawAddr, uint withdrawAmount) public returns (bool) {
 
-        // allow access only through contract flow
-        proxy.restrictedAccessToContract("CoinETHLogicContact");
+        // if gateway address exists
+        if(PROXY_GATEWAY != 0x0) {
+            // allow access only through contract flow
+            ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
-        // withdraw amount to specific address
-        bool success = CoinETHDatabase(coinETHDatabase).withdraw(withdrawAddr, withdrawAmount);
+            // get coin eth database address
+            address coinETHDatabase = ProxyGateway(PROXY_GATEWAY).contracts(coinETHDatabaseContractName);
 
-        // if withdraw successful - pass ether to the caller
-        if(success) {
+            // withdraw amount to specific address
+            bool success = CoinETHDatabase(coinETHDatabase).withdraw(withdrawAddr, withdrawAmount);
 
-            return true;
+            // if withdraw successful - pass ether to the caller
+            if(success) {
 
+                return true;
+
+            }
+
+            return false;
         }
 
         return false;

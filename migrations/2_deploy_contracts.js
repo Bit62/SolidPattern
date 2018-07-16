@@ -9,10 +9,10 @@
 *
 * */
 
-var MathService = artifacts.require("./MathServiceContract.sol"); // Deployed and afterwards registered at gateway contract - or add it directly into the constructor
+//var MathService = artifacts.require("./MathServiceContract.sol"); // Deployed as an example - not used in this example
 
-var Gateway = artifacts.require("./GatewayContract.sol"); // Deployed and afterwards registered at gateway contract
-var Proxy = artifacts.require("./ProxyContract.sol"); // Deployed and afterwards registered at gateway contract
+var ProxyGateway = artifacts.require("./ProxyGatewayContract.sol"); // Deployed as the main ecosystem contract
+var ProxyGatewayEngaged = artifacts.require("./ProxyGatewayEngagedContract.sol"); // Deployed with the proxy gateway contract address as constructor param
 
 var CoinETHController = artifacts.require("./CoinETHControllerContract.sol"); // Deployed and afterwards registered at gateway contract
 var CoinETHDatabase = artifacts.require("./CoinETHDatabaseContract.sol"); // Deployed and afterwards registered at gateway contract
@@ -24,25 +24,36 @@ var PermissionLogic = artifacts.require("./PermissionLogicContract.sol"); // Dep
 
 
 module.exports = function(deployer) {
-    deployer.deploy(MathService);
-    deployer.deploy(Gateway);
-    deployer.deploy(Proxy);
-    deployer.link(MathService, Proxy);
-    deployer.link(Gateway, Proxy);
-    deployer.link(Proxy, Gateway);
-    deployer.deploy(CoinETHLogic);
-    deployer.link(Proxy, CoinETHLogic);
-    deployer.link(Gateway, CoinETHLogic);
-    deployer.link(PermissionLogic, CoinETHLogic);
-    deployer.deploy(CoinETHController);
-    deployer.link(CoinETHController, CoinETHLogic);
+    //deployer.deploy(MathService);
+    deployer.deploy(ProxyGateway);
+    deployer.deploy(ProxyGatewayEngaged);
+
     deployer.deploy(CoinETHDatabase);
+    deployer.link(ProxyGateway, CoinETHDatabase);
+    deployer.link(ProxyGatewayEngaged, CoinETHDatabase);
+
+    deployer.deploy(CoinETHController);
+    deployer.link(ProxyGateway, CoinETHController);
+    deployer.link(ProxyGatewayEngaged, CoinETHController);
     deployer.link(CoinETHDatabase, CoinETHController);
-    deployer.deploy(PermissionLogic);
-    deployer.link(Proxy, PermissionLogic);
-    deployer.link(Gateway, PermissionLogic);
-    deployer.deploy(PermissionController);
+
+    deployer.deploy(CoinETHLogic);
+    deployer.link(ProxyGateway, CoinETHLogic);
+    deployer.link(ProxyGatewayEngaged, CoinETHLogic);
+    deployer.link(CoinETHController, CoinETHLogic);
+
     deployer.deploy(PermissionDatabase);
+    deployer.link(ProxyGateway, PermissionDatabase);
+    deployer.link(ProxyGatewayEngaged, PermissionDatabase);
+
+    deployer.deploy(PermissionController);
+    deployer.link(ProxyGateway, PermissionController);
+    deployer.link(ProxyGatewayEngaged, PermissionController);
     deployer.link(PermissionDatabase, PermissionController);
+
+    deployer.deploy(PermissionLogic);
+    deployer.link(ProxyGateway, PermissionLogic);
+    deployer.link(ProxyGatewayEngaged, PermissionLogic);
     deployer.link(PermissionController, PermissionLogic);
+
 };

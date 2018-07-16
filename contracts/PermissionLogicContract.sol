@@ -6,32 +6,25 @@ __This contract has some public functions to change permissions
 
 pragma solidity ^0.4.21;
 
-import "./ProxyContract.sol";
-import "./GatewayContract.sol";
+import "./ProxyGatewayContract.sol";
+import "./ProxyGatewayEngagedContract.sol";
 import "./PermissionControllerContract.sol";
 
-contract PermissionLogic {
+contract PermissionLogic is ProxyGatewayEngaged {
 
-    Proxy proxy;
-
-    constructor(address proxyContract) public {
-        proxy = Proxy(proxyContract);
-    }
+    bytes32 permissionControllerContractName = "PermissionController";
 
     // set an integer value for permission based on coin tags e.g. "deposit_eth", "withdraw_eth"
     function changePermission(address addr, bytes32 tag, uint8 lvl) external returns (bool) {
 
         // if gateway is set and sender address is manager
-        if(proxy.GATEWAY() != 0x0 && proxy.managers(msg.sender)) {
+        if(PROXY_GATEWAY != 0x0 && ProxyGateway(PROXY_GATEWAY).managers(msg.sender)) {
 
             // get permission controller address
-            address permissionController = Gateway(proxy.GATEWAY()).contracts("PermissionController");
-
-            // get permission database contract address
-            address permissionDatabase = Gateway(proxy.GATEWAY()).contracts("PermissionDatabase");
+            address permissionController = ProxyGateway(PROXY_GATEWAY).contracts(permissionControllerContractName);
 
             // change permission
-            bool success = PermissionController(permissionController).changePermission(permissionDatabase, addr, tag, lvl);
+            bool success = PermissionController(permissionController).changePermission(addr, tag, lvl);
 
             // return success
             return success;
@@ -43,19 +36,16 @@ contract PermissionLogic {
     }
 
     // get permission by coin tag and user address
-    function getPermission(address senderAddr, bytes32 tag) public view returns (uint8) {
+    function getPermission(address addr, bytes32 tag) public view returns (uint8) {
 
         // if gateway is set
-        if(proxy.GATEWAY() != 0x0) {
+        if(PROXY_GATEWAY != 0x0) {
 
             // get permission controller address
-            address permissionController = Gateway(proxy.GATEWAY()).contracts("PermissionController");
-
-            // get permission database contract address
-            address permissionDatabase = Gateway(proxy.GATEWAY()).contracts("PermissionDatabase");
+            address permissionController = ProxyGateway(PROXY_GATEWAY).contracts(permissionControllerContractName);
 
             // get permission of sender address
-            uint8 lvl = PermissionController(permissionController).getPermission(permissionDatabase, senderAddr, tag);
+            uint8 lvl = PermissionController(permissionController).getPermission(addr, tag);
 
             // return level of address
             return lvl;

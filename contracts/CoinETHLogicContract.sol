@@ -5,44 +5,44 @@ __This contract shows an example of a logical contract
 
 pragma solidity ^0.4.21;
 
-import "./ProxyContract.sol";
-import "./GatewayContract.sol";
-import "./PermissionLogicContract.sol";
+
+import "./ProxyGatewayContract.sol";
+import "./ProxyGatewayEngagedContract.sol";
 import "./CoinETHControllerContract.sol";
 
-contract CoinETHLogic {
+import "./PermissionLogicContract.sol";
 
-    Proxy proxy;
+contract CoinETHLogic is ProxyGatewayEngaged {
 
-    constructor(address proxyContract) public {
-        proxy = Proxy(proxyContract);
-    }
+    bytes32 coinETHControllerContractName = "CoinETHController";
+    bytes32 permissionLogicContractName = "PermissionLogic";
+
+    bytes32 depositPermissionTag = "deposit_eth";
+    bytes32 withdrawPermissionTag = "withdraw_eth";
 
     // function to deposit coin using the connected database contract
     //-> return bool
     function deposit(address depositAddr) external payable returns (bool) {
 
         // if gateway address exists
-        if(proxy.GATEWAY() != 0x0) {
+        if(PROXY_GATEWAY != 0x0) {
 
             // get permission controller contract address
-            address permissionLogic = Gateway(proxy.GATEWAY()).contracts("PermissionLogic");
+            address permissionLogic = ProxyGateway(PROXY_GATEWAY).contracts(permissionLogicContractName);
 
             // check permission
-            uint8 permission = PermissionLogic(permissionLogic).getPermission(msg.sender, "deposit_eth");
+            uint8 permission = PermissionLogic(permissionLogic).getPermission(msg.sender, depositPermissionTag);
 
             // if permission is allowed
             if(permission == 1) {
 
                 // get coin ether controller contract
-                address coinETHController = Gateway(proxy.GATEWAY()).contracts("CoinETHController");
-
-                // get coin ether database contract
-                address coinETHDatabase = Gateway(proxy.GATEWAY()).contracts("CoinETHDatabase");
+                address coinETHController = ProxyGateway(PROXY_GATEWAY).contracts("CoinETHController");
 
                 uint depositAmount = msg.value;
+
                 // deposit amount to specific address
-                bool success = CoinETHController(coinETHController).deposit(coinETHDatabase, depositAddr, depositAmount);
+                bool success = CoinETHController(coinETHController).deposit(depositAddr, depositAmount);
 
                 // if deposit is not successfully - return value to sender
                 if(!success) {
@@ -68,25 +68,22 @@ contract CoinETHLogic {
     function withdraw(address withdrawAddr, uint withdrawAmount) external returns (bool) {
 
         // if gateway address exists
-        if(proxy.GATEWAY() != 0x0) {
+        if(PROXY_GATEWAY != 0x0) {
 
             // get permission controller contract address
-            address permissionLogic = Gateway(proxy.GATEWAY()).contracts("PermissionLogic");
+            address permissionLogic = ProxyGateway(PROXY_GATEWAY).contracts(permissionLogicContractName);
 
             // check permission
-            uint8 permission = PermissionLogic(permissionLogic).getPermission(msg.sender, "withdraw_eth");
+            uint8 permission = PermissionLogic(permissionLogic).getPermission(msg.sender, withdrawPermissionTag);
 
             // if permission is allowed
             if(permission == 1) {
 
                 // get coin ether controller contract
-                address coinETHController = Gateway(proxy.GATEWAY()).contracts("CoinETHController");
-
-                // get coin ether database contract
-                address coinETHDatabase = Gateway(proxy.GATEWAY()).contracts("CoinETHDatabase");
+                address coinETHController = ProxyGateway(PROXY_GATEWAY).contracts(coinETHControllerContractName);
 
                 // withdraw amount to specific address
-                bool success = CoinETHController(coinETHController).withdraw(coinETHDatabase, withdrawAddr, withdrawAmount);
+                bool success = CoinETHController(coinETHController).withdraw(withdrawAddr, withdrawAmount);
 
                 // if withdraw successful - pass ether to the caller
                 if(success) {
