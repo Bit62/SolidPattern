@@ -3,16 +3,16 @@ __This contract stores 21 owner addresses and allows to vote for changes.
  Contracts:
   -
 */
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.0 <0.6.0;
 
-import "./ProxyGatewayEngagedContract.sol";
+import "./ProxyGatewayEngaged.sol";
 
 contract ProxyGateway {
 
     // count owner - so we know what is more or equal of 60 percent and there are not more then 21 owners
     uint8 private countOwner;
 
-    // proxy and gateway engaged contract address
+    // gateway engaged contract address
     address public ENGAGED;
 
     // struct request
@@ -40,7 +40,7 @@ contract ProxyGateway {
     mapping (address => bool) public managers;
 
     // constructor set first owner
-    constructor() internal {
+    constructor() public {
         owners[msg.sender] = true;
         countOwner += 1;
     }
@@ -53,7 +53,7 @@ contract ProxyGateway {
 
     // function restrict access to - specific contract address
     function restrictedAccessToContract(bytes32 contractName) public view {
-        (address contractAddr, bool contractExists) = getContract(contractName);
+       (address contractAddr, bool contractExists) = getContract(contractName);
         if(!contractExists || msg.sender != contractAddr) revert();
     }
 
@@ -182,7 +182,7 @@ contract ProxyGateway {
     function addContract(bytes32 name, address addr) internal returns (bool) {
 
         // check if contract exists
-        if(contracts[name] != 0x0) {
+        if(contracts[name] != address(0)) {
             return false;
         }
 
@@ -195,23 +195,23 @@ contract ProxyGateway {
     function removeContract(bytes32 name) internal returns (bool) {
 
         // check if contract exists
-        if(contracts[name] == 0x0) {
+        if(contracts[name] == address(0)) {
             return false;
         }
 
-        contracts[name] = 0x0;
+        contracts[name] = address(0);
 
         return true;
     }
 
     // function to get a contract address by name
-    function getContract(bytes32 contractName) public constant returns (address, bool) {
+    function getContract(bytes32 contractName) public view returns (address, bool) {
 
         address contractAddress = contracts[contractName];
 
         bool contractExists = true;
 
-        if(contractAddress == 0x0) {
+        if(contractAddress == address(0)) {
             contractExists = false;
         }
 
@@ -277,7 +277,7 @@ contract ProxyGateway {
     // set proxy gateway engaged contract address
     function setProxyGatewayEngagedAddress(address addr) internal returns (bool) {
 
-        if(addr != 0x0) {
+        if(addr != address(0)) {
             ENGAGED = addr;
             return true;
         }

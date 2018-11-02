@@ -3,14 +3,12 @@ __This contract shows an example of a logical contract
 -contracts that includes specific logical stuff of an application
 */
 
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.0 <0.6.0;
 
-
-import "./ProxyGatewayContract.sol";
-import "./ProxyGatewayEngagedContract.sol";
-import "./CoinETHControllerContract.sol";
-
-import "./PermissionLogicContract.sol";
+import "./ProxyGateway.sol";
+import "./ProxyGatewayEngaged.sol";
+import "./CoinETHController.sol";
+import "./PermissionLogic.sol";
 
 contract CoinETHLogic is ProxyGatewayEngaged {
 
@@ -25,7 +23,7 @@ contract CoinETHLogic is ProxyGatewayEngaged {
     function deposit(address depositAddr) external payable returns (bool) {
 
         // if gateway address exists
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
 
             // get permission controller contract address
             address permissionLogic = ProxyGateway(PROXY_GATEWAY).contracts(permissionLogicContractName);
@@ -68,7 +66,7 @@ contract CoinETHLogic is ProxyGatewayEngaged {
     function withdraw(address withdrawAddr, uint withdrawAmount) external returns (bool) {
 
         // if gateway address exists
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
 
             // get permission controller contract address
             address permissionLogic = ProxyGateway(PROXY_GATEWAY).contracts(permissionLogicContractName);

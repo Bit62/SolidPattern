@@ -4,11 +4,11 @@ __This contract has some public functions to change permissions
 - contracts that includes specific logical stuff of an application
 */
 
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.0 <0.6.0;
 
-import "./ProxyGatewayContract.sol";
-import "./ProxyGatewayEngagedContract.sol";
-import "./PermissionControllerContract.sol";
+import "./ProxyGateway.sol";
+import "./ProxyGatewayEngaged.sol";
+import "./PermissionController.sol";
 
 contract PermissionLogic is ProxyGatewayEngaged {
 
@@ -18,7 +18,7 @@ contract PermissionLogic is ProxyGatewayEngaged {
     function changePermission(address addr, bytes32 tag, uint8 lvl) external returns (bool) {
 
         // if gateway is set and sender address is manager
-        if(PROXY_GATEWAY != 0x0 && ProxyGateway(PROXY_GATEWAY).managers(msg.sender)) {
+        if(PROXY_GATEWAY != address(0) && ProxyGateway(PROXY_GATEWAY).managers(msg.sender)) {
 
             // get permission controller address
             address permissionController = ProxyGateway(PROXY_GATEWAY).contracts(permissionControllerContractName);
@@ -39,7 +39,7 @@ contract PermissionLogic is ProxyGatewayEngaged {
     function getPermission(address addr, bytes32 tag) public view returns (uint8) {
 
         // if gateway is set
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
 
             // get permission controller address
             address permissionController = ProxyGateway(PROXY_GATEWAY).contracts(permissionControllerContractName);

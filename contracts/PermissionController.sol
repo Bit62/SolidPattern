@@ -2,11 +2,11 @@
 __This contract works only internal and gets called by logical contacts
 */
 
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.0 <0.6.0;
 
-import "./ProxyGatewayContract.sol";
-import "./ProxyGatewayEngagedContract.sol";
-import "./PermissionDatabaseContract.sol";
+import "./ProxyGateway.sol";
+import "./ProxyGatewayEngaged.sol";
+import "./PermissionDatabase.sol";
 
 contract PermissionController is ProxyGatewayEngaged {
 
@@ -17,7 +17,7 @@ contract PermissionController is ProxyGatewayEngaged {
     function changePermission(address addr, bytes32 tag, uint8 lvl) public returns (bool) {
 
         // if gateway address exists
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
             // allow access only through contract flow
             ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
@@ -39,7 +39,7 @@ contract PermissionController is ProxyGatewayEngaged {
     function getPermission(address addr, bytes32 tag) public view returns (uint8) {
 
         // if gateway address exists
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
             // allow access only through contract flow
             ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 

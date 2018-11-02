@@ -3,10 +3,10 @@ __This contract stores data of users ether values
 -
 */
 
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.0 <0.6.0;
 
-import "./ProxyGatewayContract.sol";
-import "./ProxyGatewayEngagedContract.sol";
+import "./ProxyGateway.sol";
+import "./ProxyGatewayEngaged.sol";
 
 contract CoinETHDatabase is ProxyGatewayEngaged {
 

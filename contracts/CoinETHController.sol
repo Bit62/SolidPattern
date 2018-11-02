@@ -3,12 +3,11 @@ __This contract shows an example of a controller contract
 -
 */
 
-pragma solidity ^0.4.21;
+pragma solidity >=0.4.0 <0.6.0;
 
-import "./ProxyGatewayContract.sol";
-import "./ProxyGatewayEngagedContract.sol";
-
-import "./CoinETHDatabaseContract.sol";
+import "./ProxyGateway.sol";
+import "./ProxyGatewayEngaged.sol";
+import "./CoinETHDatabase.sol";
 
 contract CoinETHController is ProxyGatewayEngaged  {
 
@@ -20,7 +19,7 @@ contract CoinETHController is ProxyGatewayEngaged  {
     function deposit(address depositAddr, uint depositAmount) public returns (bool) {
 
         // if gateway address exists
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
             // allow access only through contract flow
             ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
@@ -49,7 +48,7 @@ contract CoinETHController is ProxyGatewayEngaged  {
     function withdraw(address withdrawAddr, uint withdrawAmount) public returns (bool) {
 
         // if gateway address exists
-        if(PROXY_GATEWAY != 0x0) {
+        if(PROXY_GATEWAY != address(0)) {
             // allow access only through contract flow
             ProxyGateway(PROXY_GATEWAY).restrictedAccessToContract(restrictedAccessThroughContractName);
 
