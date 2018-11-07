@@ -26,13 +26,13 @@
 var ProxyGateway = artifacts.require("./ProxyGateway.sol"); // Deployed as the main ecosystem contract
 var ProxyGatewayEngaged = artifacts.require("./ProxyGatewayEngaged.sol"); // Deployed with the proxy gateway contract address as constructor param
 
-var PermissionController = artifacts.require("./PermissionControllerContract.sol"); // Deployed and afterwards registered at gateway contract
-var PermissionDatabase = artifacts.require("./PermissionDatabaseContract.sol"); // Deployed and afterwards registered at gateway contract
-var PermissionLogic = artifacts.require("./PermissionLogicContract.sol"); // Deployed and afterwards registered at gateway contract
+var PermissionController = artifacts.require("./PermissionController.sol"); // Deployed and afterwards registered at gateway contract
+var PermissionDatabase = artifacts.require("./PermissionDatabase.sol"); // Deployed and afterwards registered at gateway contract
+var PermissionLogic = artifacts.require("./PermissionLogic.sol"); // Deployed and afterwards registered at gateway contract
 
-var CoinETHController = artifacts.require("./CoinETHControllerContract.sol"); // Deployed and afterwards registered at gateway contract
-var CoinETHDatabase = artifacts.require("./CoinETHDatabaseContract.sol"); // Deployed and afterwards registered at gateway contract
-var CoinETHLogic = artifacts.require("./CoinETHLogicContract.sol"); // Deployed and afterwards registered at gateway contract
+var CoinETHController = artifacts.require("./CoinETHController.sol"); // Deployed and afterwards registered at gateway contract
+var CoinETHDatabase = artifacts.require("./CoinETHDatabase.sol"); // Deployed and afterwards registered at gateway contract
+var CoinETHLogic = artifacts.require("./CoinETHLogic.sol"); // Deployed and afterwards registered at gateway contract
 
 /**
  * Set deployment execution order
