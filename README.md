@@ -4,9 +4,9 @@ Building applications on Ethereum Blockchain introduces some new challenges. The
 
 Project Concept High Level View:
 
-![SolidPattern High Level View](https://solidpattern.academy/assets/solidity_pattern.jpg)
+![SolidPattern High Level View](http://solidpattern.pixelparker.com/assets/solidity_pattern.jpg)
 
-The full project description can be found at [solidpattern.academy](https://solidpattern.academy/).
+The full project description can be found at [solidpattern.academy](http://solidpattern.pixelparker.com/).
 
 Note: This project should help you building bigger scalable blockchain solutions by using this concept and the basic contracts code. There is no GUI or a playground yet - feel free to add so.
 
